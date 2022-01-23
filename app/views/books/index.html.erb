@@ -11,11 +11,29 @@
       <th>introduction</th>
       <th><%= current_user.introduction %></th>
     </tr>
+    <tr>
+      <th>
+        <% if @user.id == current_user.id %>
+          <%= link_to "edit", edit_user_path(@user.id) %>
+        <% else %>
+          <%= link_to "edit", user_path(current_user.id) %>
+        <% end %>
+      </th>
+    </tr>
   </tbody>
 </table>
 
 
 <h2>New Book</h2>
+
+<% if @book.errors.any? %>
+  <%= @book.errors.count %>errors prohibited this book from being saved:
+  <ul>
+    <% @book.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  </ul>
+<% end %>
 
 <%= form_with model: @book, local: true do |f| %>
   <h4>Title</h4>
